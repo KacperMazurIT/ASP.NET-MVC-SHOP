@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,7 +79,6 @@
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -200,14 +200,26 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006260748507_InitialCreate.cs" />
+    <Compile Include="Migrations\202006260748507_InitialCreate.Designer.cs">
+      <DependentUpon>202006260748507_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006261134029_AddCategoryTable.cs" />
+    <Compile Include="Migrations\202006261134029_AddCategoryTable.Designer.cs">
+      <DependentUpon>202006261134029_AddCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Data\CategoryDTO.cs" />
     <Compile Include="Models\Data\DB.cs" />
     <Compile Include="Models\Data\PageDTO.cs" />
     <Compile Include="Models\Data\SidebarDTO.cs" />
     <Compile Include="Models\ViewModels\Pages\PageVM.cs" />
     <Compile Include="Models\ViewModels\Pages\SidebarVM.cs" />
+    <Compile Include="Models\ViewModels\Shop\CategoryVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -490,14 +502,10 @@
     <Content Include="fileman\js\utils.js" />
     <Content Include="fileman\LICENSE.txt" />
     <Content Include="fileman\third-party.txt" />
-    <Content Include="fileman\Uploads\galadriel%27s path home.jpg" />
     <Content Include="fileman\Uploads\Images\DSC_2987.jpg" />
     <Content Include="fileman\Uploads\Images\DSC_5744.jpg" />
-    <Content Include="fileman\Uploads\Images\sidebar.png" />
-    <Content Include="fileman\Uploads\Images\wwf-logo-design1.jpg" />
     <Content Include="fileman\Uploads\LICENSE.txt" />
     <Content Include="fileman\Uploads\roxy-fileman-logo.gif" />
-    <Content Include="fileman\Uploads\smiley 200x200.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -526,6 +534,7 @@
     <Content Include="Scripts\ckeditor\ckeditor.php" />
     <Content Include="Scripts\ckeditor\ckeditor.pack" />
     <Content Include="fileman\asp_net\main.ashx" />
+    <Content Include="fileman\conf.json" />
     <Content Include="fileman\lang\bg.json" />
     <Content Include="fileman\lang\ca.json" />
     <Content Include="fileman\lang\cs.json" />
@@ -543,7 +552,6 @@
     <Content Include="fileman\lang\ru.json" />
     <Content Include="fileman\lang\sk.json" />
     <Content Include="fileman\lang\tr.json" />
-    <Content Include="fileman\conf.json" />
     <Content Include="fileman\web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor_source.js" />
@@ -913,7 +921,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Areas\Admin\Views\Shop\" />
+    <Folder Include="fileman\aspnet_client\system_web\2_0_50727\" />
+    <Folder Include="fileman\aspnet_client\system_web\4_0_30319\" />
+    <Folder Include="fileman\tmp\" />
+    <Folder Include="fileman\Uploads\Documents\" />
+    <Folder Include="fileman\Uploads\FLV\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -922,6 +935,14 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202006260748507_InitialCreate.resx">
+      <DependentUpon>202006260748507_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006261134029_AddCategoryTable.resx">
+      <DependentUpon>202006261134029_AddCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
