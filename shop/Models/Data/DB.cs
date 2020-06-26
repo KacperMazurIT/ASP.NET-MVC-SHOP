@@ -12,5 +12,6 @@ namespace shop.Models.Data
         public DbSet<SidebarDTO> Sidebar { get; set; }
         public DbSet<CategoryDTO> Categories { get; set; }
  
+
     }
 }
