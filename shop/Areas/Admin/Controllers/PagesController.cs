@@ -19,7 +19,6 @@ namespace shop.Areas.Admin.Controllers
             {
                 // Inicjalizacja listy
                 pagesList = db.Pages.ToArray().OrderBy(x => x.Sorting).Select(x => new PageVM(x)).ToList();
-
             }
 
             // zwracamy strony do widoku
