@@ -24,6 +24,6 @@ namespace shop.Models.ViewModels.Shop
         public int Id { get; set; }
         public string Name { get; set; }
         public string Slug { get; set; }
-        public string Sorting { get; set; }
+        public int Sorting { get; set; }
     }
 }
