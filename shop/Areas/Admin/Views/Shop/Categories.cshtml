@@ -6,10 +6,10 @@
 
 <h2>Shop categories</h2>
 
-<div class="new-cat col-md-6">
-    <input type="text" id="newCatName" class="form-control " />
+<div class="new-cat col-md-3">
+    <input type="text" id="newcatname" class="form-control " />
     <p>
-        <a href="#" id="newCat">Add new Category</a>
+        <a href="#" id="newcata">Add new Category</a>
         <span class="ajax-text">
             <img src="~/Content/img/ajax-loader.gif" />
         </span>
@@ -18,11 +18,11 @@
 
 @if (!Model.Any())
 {
-    <h1 class="text-center">There are no Categories</h1>
+    <h1 class="text-center">Niema żadnych kategorii.</h1>
 }
 else
 {
-    <table class="table sorting" id="pages">
+    <table class="table sorting categories" id="pages">
         <tr class="home">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -32,12 +32,12 @@ else
 
         @foreach (var item in Model)
         {
-            <tr>
+            <tr id="id_@item.Id">
                 <td>
                     @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </td>
                 <td>
-                    @Html.ActionLink("Delete", "DeleteCategory", new { id = item.Id }, new { @class = "delete" })
+                    @Html.ActionLink("Usuń", "DeleteCategory", new { id = item.Id }, new { @class = "delete" })
                 </td>
             </tr>
         }
@@ -48,49 +48,38 @@ else
 
 @section scripts {
 
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 
     <script>
-
         $(function () {
-
             /*
-             * Dodawanie nowej kategorii 
-             */
-
-            var newCatA = $("a#newCat");
-            var newCatTextInput = $("#newCatName");
+            * Dodawanie nowej kategorii
+            */
+            var newCatA = $("a#newcata");
+            var newCatTextInput = $("#newcatname");
             var ajaxText = $("span.ajax-text");
             var table = $("table#pages tbody");
-
             newCatTextInput.keyup(function (e) {
                 if (e.keyCode == 13) {
                     newCatA.click();
                 }
             })
-
             newCatA.click(function (e) {
                 e.preventDefault();
-
                 var catName = newCatTextInput.val();
-
                 if (catName.length < 2) {
-                    alert("Nazwa kategorii musi mieć conajmniej dwa znaki!");
-                    return false;
+                    alert("Nazwa ketegorii musi mieć conajmniej 2 znaki!");
+                    return false
                 }
-
                 ajaxText.show();
-
                 var url = "/admin/shop/AddNewCategory"
-
                 $.post(url, { catName: catName }, function (data) {
-
                     var response = data.trim();
                     if (response == "tytulzajety") {
-                        ajaxText.html("<span class='alert alert-danger'>Ten tytuł jest już zajęty!</span>")
+                        ajaxText.html("<span class='alert alert-danger'>Ten tytuł już jest zajęty!</span>")
                         setTimeout(function () {
                             ajaxText.fadeOut("fast", function () {
-                                ajaxText.html("<img src='/Content/img/ajax-loader.gif'/>");
+                                ajaxText.html("<img src=/Content/img/ajax-loader.gif />");
                             });
                         }, 2000);
                         return false;
@@ -99,15 +88,13 @@ else
                             location.reload();
                         }
                         else {
-                            ajaxText.html("<span class='alert alert-success'>Kategoria została dodana.</span>")
+                            ajaxText.html("<span class='alert alert-success'>Kategoria została dodana</span>")
                             setTimeout(function () {
                                 ajaxText.fadeOut("fast", function () {
-                                    ajaxText.html("<img src='/Content/img/ajax-loader.gif'/>");
+                                    ajaxText.html("<img src=/Content/img/ajax-loader.gif />");
                                 });
                             }, 2000);
-
                             newCatTextInput.val("");
-
                             var toAppend = $("table#pages tbody tr:last").clone();
                             toAppend.attr("id", "id_" + data)
                             toAppend.find("#item_Name").val(catName);
@@ -116,22 +103,31 @@ else
                             table.sortable("refresh");
                         }
                     }
-
                 })
-
             })
-
-
-            //////////////////////////////////////////////////////
-
+            ///////////////////////////////////////////////////////////////////////
             /*
-             * 
-             */
-
-
-        }) 
-
-
+            * Sortowanie Kategorii
+            */
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    var url = "/Admin/Shop/ReorderCategories";
+                    $.post(url, ids, function (data) {
+                    });
+                }
+            });
+            ///////////////////////////////////////////////////////////////////////
+            /*
+            * Potwierdzeni Usuwania Kategorii
+            */
+            $("body").on("click", "a.delete", function () {
+                if (!confirm("Potwierdz usunięcie kategorii")) return false;
+            });
+            ///////////////////////////////////////////////////////////////////////
+        })
     </script>
 
 }
