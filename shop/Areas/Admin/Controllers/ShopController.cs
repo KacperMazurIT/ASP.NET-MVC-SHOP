@@ -105,5 +105,30 @@ namespace shop.Areas.Admin.Controllers
 
             return RedirectToAction("Categories");
         }
+
+        // POST: Admin/Shop/RenameCategory
+        [HttpPost]
+        public string  RenameCategory(string newCatName, int id)
+        {
+            using (Db db = new Db())
+            {
+                // Sprawdzenie czy kategoria jest unikalna
+                if (db.Categories.Any(x => x.Name == newCatName))
+                    return "tytulzajety";
+
+                // pobieramy kategorię
+                CategoryDTO dto = db.Categories.Find(id);
+
+                // edycja kategorii
+
+                dto.Name = newCatName;
+                dto.Slug = newCatName.Replace(" ", "-").ToLower();
+
+                // zapis na bazie
+                db.SaveChanges();
+            }
+
+            return "Ok";
+        }
     }
 }
