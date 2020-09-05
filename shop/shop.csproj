@@ -216,14 +216,20 @@
     <Compile Include="Migrations\202007082039094_next.Designer.cs">
       <DependentUpon>202007082039094_next.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009050826112_AddProductTable.cs" />
+    <Compile Include="Migrations\202009050826112_AddProductTable.Designer.cs">
+      <DependentUpon>202009050826112_AddProductTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryDTO.cs" />
     <Compile Include="Models\Data\DB.cs" />
     <Compile Include="Models\Data\PageDTO.cs" />
+    <Compile Include="Models\Data\ProductDTO.cs" />
     <Compile Include="Models\Data\SidebarDTO.cs" />
     <Compile Include="Models\ViewModels\Pages\PageVM.cs" />
     <Compile Include="Models\ViewModels\Pages\SidebarVM.cs" />
     <Compile Include="Models\ViewModels\Shop\CategoryVM.cs" />
+    <Compile Include="Models\ViewModels\Shop\ProductVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -950,6 +956,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007082039094_next.resx">
       <DependentUpon>202007082039094_next.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009050826112_AddProductTable.resx">
+      <DependentUpon>202009050826112_AddProductTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

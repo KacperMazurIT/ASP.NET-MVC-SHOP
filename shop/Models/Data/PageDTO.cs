@@ -17,5 +17,6 @@ namespace shop.Models.Data
         public string Body { get; set; }
         public int Sorting { get; set; }
         public bool HasSidebar { get; set; }
+
     }
 }
