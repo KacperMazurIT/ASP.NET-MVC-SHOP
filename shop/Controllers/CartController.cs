@@ -125,6 +125,22 @@ namespace shop.Controllers
             return PartialView(model);
         }
 
+        public JsonResult IncrementProduct(int productId)
+        {
+            // Inicjalizacja listy CartVM
 
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            // pobieramy CartVM
+            CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
+
+            // zwiekszamy ilosc produktu
+            model.Quantity++;
+
+            // przygotowanie danych do JSONA
+            var result = new { qty = model.Quantity, price = model.Price };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
