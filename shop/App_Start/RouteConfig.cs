@@ -13,6 +13,7 @@ namespace shop
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute("PagesMenuPartial", "Pages/PagesMenuPartial", new { controller = "Pages", action = "PagesMenuPartial" }, new[] { "shop.Controllers" });
             routes.MapRoute("Pages", "{page}", new { controller = "Pages", action = "Index" }, new[] { "shop.Controllers" });
             routes.MapRoute("Default", "", new { controller = "Pages", action = "Index" }, new[] { "shop.Controllers" });
         }
