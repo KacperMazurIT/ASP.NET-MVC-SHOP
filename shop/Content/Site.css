@@ -42,3 +42,7 @@ span.ajaxmsg {
     top: 5px;
     margin-left: 50px;
 }
+
+.ib {
+    display: inline-block !important;
+}

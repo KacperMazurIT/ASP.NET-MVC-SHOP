@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using shop.Models.Data;
 using shop.Models.ViewModels.Cart;
 
 namespace shop.Controllers
@@ -53,8 +54,11 @@ namespace shop.Controllers
                 foreach (var item in list)
                 {
                     qty += item.Quantity;
-                    price += item.Quantity * item.ProductId;
+                    price += item.Quantity * item.Price;
                 }
+
+                model.Quantity = qty;
+                model.Price = price;
             }
             else
             {
@@ -65,5 +69,62 @@ namespace shop.Controllers
 
             return PartialView(model);
         }
+
+        public ActionResult AddToCartPartial(int id)
+        {
+            // inicjalizacja CartVM List
+            List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
+
+            // inicjalizacja CartVM
+            CartVM model = new CartVM();
+
+            using (Db db = new Db())
+            {
+                // Pobieramy produkt
+                ProductDTO product = db.Products.Find(id);
+
+                // Sprawdzamy czy ten produkt jest juz w koszyku
+                var productInCart = cart.FirstOrDefault(x => x.ProductId == id);
+
+                // w zaleznosci od tego czy produkt jest w koszyku go dodajemy lub zwiekszamy ilosc
+                if(productInCart == null)
+                {
+                    cart.Add(new CartVM()
+                    {
+                        ProductId = product.Id,
+                        ProductName = product.Name,
+                        Quantity = 1,
+                        Price = product.Price,
+                        Image = product.ImageName
+                    });
+                }
+                else
+                {
+                    productInCart.Quantity++;
+                }
+
+            }
+
+            // pobieramy calkowite wartosc ilosci i ceny i dodajemy do modelu
+            int qty = 0;
+                decimal price = 0m;
+
+                foreach (var item in cart)
+                {
+                    qty += item.Quantity;
+                    price += item.Quantity * item.Price;
+                }
+
+                model.Quantity = qty;
+                model.Price = price;
+
+                // zapis w sesji
+                Session["cart"] = cart;
+
+
+            return PartialView(model);
+        }
+
+
     }
 }
